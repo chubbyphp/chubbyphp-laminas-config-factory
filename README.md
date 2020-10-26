@@ -2,10 +2,22 @@
 
 [![Build Status](https://api.travis-ci.org/chubbyphp/chubbyphp-laminas-config-factory.png?branch=master)](https://travis-ci.org/chubbyphp/chubbyphp-laminas-config-factory)
 [![Coverage Status](https://coveralls.io/repos/github/chubbyphp/chubbyphp-laminas-config-factory/badge.svg?branch=master)](https://coveralls.io/github/chubbyphp/chubbyphp-laminas-config-factory?branch=master)
+[![Infection MSI](https://badge.stryker-mutator.io/github.com/chubbyphp/chubbyphp-laminas-config-factory/master)](https://travis-ci.org/chubbyphp/chubbyphp-laminas-config-factory)
 [![Latest Stable Version](https://poser.pugx.org/chubbyphp/chubbyphp-laminas-config-factory/v/stable.png)](https://packagist.org/packages/chubbyphp/chubbyphp-laminas-config-factory)
 [![Total Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-laminas-config-factory/downloads.png)](https://packagist.org/packages/chubbyphp/chubbyphp-laminas-config-factory)
 [![Monthly Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-laminas-config-factory/d/monthly)](https://packagist.org/packages/chubbyphp/chubbyphp-laminas-config-factory)
-[![Daily Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-laminas-config-factory/d/daily)](https://packagist.org/packages/chubbyphp/chubbyphp-laminas-config-factory)
+
+[![bugs](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-laminas-config-factory&metric=bugs)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-laminas-config-factory)
+[![code_smells](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-laminas-config-factory&metric=code_smells)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-laminas-config-factory)
+[![coverage](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-laminas-config-factory&metric=coverage)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-laminas-config-factory)
+[![duplicated_lines_density](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-laminas-config-factory&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-laminas-config-factory)
+[![ncloc](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-laminas-config-factory&metric=ncloc)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-laminas-config-factory)
+[![sqale_rating](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-laminas-config-factory&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-laminas-config-factory)
+[![alert_status](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-laminas-config-factory&metric=alert_status)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-laminas-config-factory)
+[![reliability_rating](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-laminas-config-factory&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-laminas-config-factory)
+[![security_rating](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-laminas-config-factory&metric=security_rating)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-laminas-config-factory)
+[![sqale_index](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-laminas-config-factory&metric=sqale_index)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-laminas-config-factory)
+[![vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-laminas-config-factory&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-laminas-config-factory)
 
 ## Description
 
@@ -21,7 +33,7 @@ available as an independent repository.
 
 ## Requirements
 
- * php: ^7.2
+ * php: ^7.2|^8.0
  * [psr/container][10]: ^1.0
 
 ## Installation
