@@ -83,7 +83,7 @@ $serviceA = [ServiceAFactory::class, 'default']($container);
 
 ## Copyright
 
-Dominik Zogg 2020
+Dominik Zogg 2021
 
 [1]: https://packagist.org/packages/chubbyphp/chubbyphp-laminas-config-factory
 
