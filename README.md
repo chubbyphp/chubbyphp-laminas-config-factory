@@ -34,7 +34,7 @@ available as an independent repository.
 ## Requirements
 
  * php: ^7.4|^8.0
- * [psr/container][10]: ^1.0
+ * [psr/container][10]: ^1.0|^2.0
 
 ## Installation
 
