@@ -60,7 +60,7 @@ abstract class AbstractFactory
      */
     protected function resolveValue(ContainerInterface $container, $value)
     {
-        if (is_array($value)) {
+        if (\is_array($value)) {
             foreach ($value as $subKey => $subValue) {
                 $value[$subKey] = $this->resolveValue($container, $subValue);
             }
@@ -68,7 +68,7 @@ abstract class AbstractFactory
             return $value;
         }
 
-        return is_string($value) && $container->has($value) ? $container->get($value) : $value;
+        return \is_string($value) && $container->has($value) ? $container->get($value) : $value;
     }
 
     /**

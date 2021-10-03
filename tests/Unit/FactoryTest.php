@@ -16,7 +16,7 @@ use Psr\Container\ContainerInterface;
  *
  * @internal
  */
-final class NamedFactoryTest extends TestCase
+final class FactoryTest extends TestCase
 {
     use MockByCallsTrait;
 
@@ -67,7 +67,7 @@ final class NamedFactoryTest extends TestCase
             }
         };
 
-        $factoryClass = get_class($factory);
+        $factoryClass = \get_class($factory);
 
         $service = [$factoryClass, $name]($container);
 
@@ -127,7 +127,7 @@ final class NamedFactoryTest extends TestCase
                     }
                 };
 
-                $dependencyFactoryClass = get_class($dependencyFactory);
+                $dependencyFactoryClass = \get_class($dependencyFactory);
 
                 return $this->resolveDependency($container, \stdClass::class, $dependencyFactoryClass);
             }
