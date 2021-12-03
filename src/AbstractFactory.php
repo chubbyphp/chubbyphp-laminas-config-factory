@@ -36,7 +36,10 @@ abstract class AbstractFactory
             return $container->get($class.$this->name);
         }
 
-        return (new $factoryClass($this->name))($container);
+        /** @var callable $factory */
+        $factory = new $factoryClass($this->name);
+
+        return $factory($container);
     }
 
     /**
