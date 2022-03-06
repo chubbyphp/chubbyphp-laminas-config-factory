@@ -67,7 +67,7 @@ final class FactoryTest extends TestCase
             }
         };
 
-        $factoryClass = \get_class($factory);
+        $factoryClass = $factory::class;
 
         $service = [$factoryClass, $name]($container);
 
@@ -127,7 +127,7 @@ final class FactoryTest extends TestCase
                     }
                 };
 
-                $dependencyFactoryClass = \get_class($dependencyFactory);
+                $dependencyFactoryClass = $dependencyFactory::class;
 
                 return $this->resolveDependency($container, \stdClass::class, $dependencyFactoryClass);
             }
@@ -155,11 +155,7 @@ final class FactoryTest extends TestCase
 
                 $config = ['key1' => 'value1', 'key2' => 2, 'key3' => ['key31' => 'value31', 'key32' => 5]];
 
-                if ('' === $this->name) {
-                    $object->config = $this->resolveConfig($config);
-                } else {
-                    $object->config = $this->resolveConfig([$this->name => $config]);
-                }
+                $object->config = '' === $this->name ? $this->resolveConfig($config) : $this->resolveConfig([$this->name => $config]);
 
                 return $object;
             }

@@ -8,11 +8,8 @@ use Psr\Container\ContainerInterface;
 
 abstract class AbstractFactory
 {
-    protected string $name;
-
-    final public function __construct(string $name = '')
+    final public function __construct(protected string $name = '')
     {
-        $this->name = $name;
     }
 
     /**

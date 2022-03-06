@@ -33,15 +33,15 @@ available as an independent repository.
 
 ## Requirements
 
- * php: ^7.4|^8.0
- * [psr/container][10]: ^1.0|^2.0
+ * php: ^8.0
+ * [psr/container][10]: ^1.1.2|^2.0.2
 
 ## Installation
 
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-laminas-config-factory][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-laminas-config-factory "^1.1"
+composer require chubbyphp/chubbyphp-laminas-config-factory "^1.2"
 ```
 
 ## Usage
@@ -83,7 +83,7 @@ $serviceA = [ServiceAFactory::class, 'default']($container);
 
 ## Copyright
 
-Dominik Zogg 2021
+Dominik Zogg 2022
 
 [1]: https://packagist.org/packages/chubbyphp/chubbyphp-laminas-config-factory
 
