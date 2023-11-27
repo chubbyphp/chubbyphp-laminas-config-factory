@@ -37,9 +37,7 @@ final class FactoryTest extends TestCase
                 return $object;
             }
 
-            private function setSomething(): void
-            {
-            }
+            private function setSomething(): void {}
         };
 
         $service = $factory($container);
@@ -254,8 +252,7 @@ final class FactoryTest extends TestCase
             {
                 return $this->callSetters(
                     $container,
-                    new class() {
-                    },
+                    new class() {},
                     ['name' => $this->name]
                 );
             }
@@ -267,7 +264,7 @@ final class FactoryTest extends TestCase
     /**
      * @return array<int, array<string, string>>
      */
-    public function namesProvider(): array
+    public static function namesProvider(): iterable
     {
         return [
             ['name' => ''],

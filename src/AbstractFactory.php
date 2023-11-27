@@ -8,9 +8,7 @@ use Psr\Container\ContainerInterface;
 
 abstract class AbstractFactory
 {
-    final public function __construct(protected string $name = '')
-    {
-    }
+    final public function __construct(protected string $name = '') {}
 
     /**
      * @param array<int, ContainerInterface> $arguments
@@ -54,11 +52,9 @@ abstract class AbstractFactory
     }
 
     /**
-     * @param mixed $value
-     *
      * @return mixed
      */
-    protected function resolveValue(ContainerInterface $container, $value)
+    protected function resolveValue(ContainerInterface $container, mixed $value)
     {
         if (\is_array($value)) {
             foreach ($value as $subKey => $subValue) {
