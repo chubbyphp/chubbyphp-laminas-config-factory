@@ -33,7 +33,7 @@ available as an independent repository.
 
 ## Requirements
 
- * php: ^8.1
+ * php: ^8.2
  * [psr/container][10]: ^2.0.2
 
 ## Installation
@@ -41,7 +41,7 @@ available as an independent repository.
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-laminas-config-factory][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-laminas-config-factory "^1.3"
+composer require chubbyphp/chubbyphp-laminas-config-factory "^1.4"
 ```
 
 ## Usage

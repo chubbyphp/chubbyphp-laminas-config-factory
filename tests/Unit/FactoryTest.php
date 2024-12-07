@@ -115,7 +115,7 @@ final class FactoryTest extends TestCase
         $factory = new class($name) extends AbstractFactory {
             public function __invoke(ContainerInterface $container)
             {
-                $dependencyFactory = new class() extends AbstractFactory {
+                $dependencyFactory = new class extends AbstractFactory {
                     public function __invoke(ContainerInterface $container)
                     {
                         $object = new \stdClass();
@@ -216,7 +216,7 @@ final class FactoryTest extends TestCase
             {
                 return $this->callSetters(
                     $container,
-                    new class() {
+                    new class {
                         private $name;
 
                         public function setName(string $name): void
@@ -247,12 +247,12 @@ final class FactoryTest extends TestCase
         /** @var ContainerInterface|MockObject $container */
         $container = $this->getMockByCalls(ContainerInterface::class);
 
-        $factory = new class() extends AbstractFactory {
+        $factory = new class extends AbstractFactory {
             public function __invoke(ContainerInterface $container)
             {
                 return $this->callSetters(
                     $container,
-                    new class() {},
+                    new class {},
                     ['name' => $this->name]
                 );
             }

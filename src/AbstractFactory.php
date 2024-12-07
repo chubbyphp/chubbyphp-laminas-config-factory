@@ -31,7 +31,7 @@ abstract class AbstractFactory
             return $container->get($class.$this->name);
         }
 
-        /** @var callable $factory */
+        /** @var \Closure(ContainerInterface): object $factory */
         $factory = new $factoryClass($this->name);
 
         return $factory($container);
