@@ -36,8 +36,6 @@ final class FactoryTest extends TestCase
 
                 return $object;
             }
-
-            private function setSomething(): void {}
         };
 
         $service = $factory($container);
