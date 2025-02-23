@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Chubbyphp\Tests\Laminas\Config\Factory;
 
 use Chubbyphp\Laminas\Config\Factory\AbstractFactory;
-use Chubbyphp\Mock\Call;
-use Chubbyphp\Mock\MockByCallsTrait;
-use PHPUnit\Framework\MockObject\MockObject;
+use Chubbyphp\Mock\MockMethod\WithReturn;
+use Chubbyphp\Mock\MockObjectBuilder;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
@@ -18,15 +17,15 @@ use Psr\Container\ContainerInterface;
  */
 final class FactoryTest extends TestCase
 {
-    use MockByCallsTrait;
-
     /**
      * @dataProvider namesProvider
      */
     public function testInvoke(string $name): void
     {
-        /** @var ContainerInterface|MockObject $container */
-        $container = $this->getMockByCalls(ContainerInterface::class);
+        $builder = new MockObjectBuilder();
+
+        /** @var ContainerInterface $container */
+        $container = $builder->create(ContainerInterface::class, []);
 
         $factory = new class($name) extends AbstractFactory {
             public function __invoke(ContainerInterface $container)
@@ -50,8 +49,10 @@ final class FactoryTest extends TestCase
      */
     public function testCallStatic(string $name): void
     {
-        /** @var ContainerInterface|MockObject $container */
-        $container = $this->getMockByCalls(ContainerInterface::class);
+        $builder = new MockObjectBuilder();
+
+        /** @var ContainerInterface $container */
+        $container = $builder->create(ContainerInterface::class, []);
 
         $factory = new class($name) extends AbstractFactory {
             public function __invoke(ContainerInterface $container)
@@ -80,10 +81,12 @@ final class FactoryTest extends TestCase
         $dependency = new \stdClass();
         $dependency->name = $name;
 
-        /** @var ContainerInterface|MockObject $container */
-        $container = $this->getMockByCalls(ContainerInterface::class, [
-            Call::create('has')->with(\stdClass::class.$name)->willReturn(true),
-            Call::create('get')->with(\stdClass::class.$name)->willReturn($dependency),
+        $builder = new MockObjectBuilder();
+
+        /** @var ContainerInterface $container */
+        $container = $builder->create(ContainerInterface::class, [
+            new WithReturn('has', [\stdClass::class.$name], true),
+            new WithReturn('get', [\stdClass::class.$name], $dependency),
         ]);
 
         $factory = new class($name) extends AbstractFactory {
@@ -105,9 +108,11 @@ final class FactoryTest extends TestCase
      */
     public function testResolveDependencyWithoutExistingService(string $name): void
     {
-        /** @var ContainerInterface|MockObject $container */
-        $container = $this->getMockByCalls(ContainerInterface::class, [
-            Call::create('has')->with(\stdClass::class.$name)->willReturn(false),
+        $builder = new MockObjectBuilder();
+
+        /** @var ContainerInterface $container */
+        $container = $builder->create(ContainerInterface::class, [
+            new WithReturn('has', [\stdClass::class.$name], false),
         ]);
 
         $factory = new class($name) extends AbstractFactory {
@@ -141,8 +146,10 @@ final class FactoryTest extends TestCase
      */
     public function testResolveConfig(string $name): void
     {
-        /** @var ContainerInterface|MockObject $container */
-        $container = $this->getMockByCalls(ContainerInterface::class);
+        $builder = new MockObjectBuilder();
+
+        /** @var ContainerInterface $container */
+        $container = $builder->create(ContainerInterface::class, []);
 
         $factory = new class($name) extends AbstractFactory {
             public function __invoke(ContainerInterface $container)
@@ -169,11 +176,13 @@ final class FactoryTest extends TestCase
      */
     public function testResolveValue(string $name): void
     {
-        /** @var ContainerInterface|MockObject $container */
-        $container = $this->getMockByCalls(ContainerInterface::class, [
-            Call::create('has')->with('value1')->willReturn(false),
-            Call::create('has')->with('value31')->willReturn(true),
-            Call::create('get')->with('value31')->willReturn('value333'),
+        $builder = new MockObjectBuilder();
+
+        /** @var ContainerInterface $container */
+        $container = $builder->create(ContainerInterface::class, [
+            new WithReturn('has', ['value1'], false),
+            new WithReturn('has', ['value31'], true),
+            new WithReturn('get', ['value31'], 'value333'),
         ]);
 
         $factory = new class($name) extends AbstractFactory {
@@ -204,9 +213,11 @@ final class FactoryTest extends TestCase
      */
     public function testCallSetters(string $name): void
     {
-        /** @var ContainerInterface|MockObject $container */
-        $container = $this->getMockByCalls(ContainerInterface::class, [
-            Call::create('has')->with($name)->willReturn(false),
+        $builder = new MockObjectBuilder();
+
+        /** @var ContainerInterface $container */
+        $container = $builder->create(ContainerInterface::class, [
+            new WithReturn('has', [$name], false),
         ]);
 
         $factory = new class($name) extends AbstractFactory {
@@ -254,8 +265,10 @@ final class FactoryTest extends TestCase
         $this->expectException(\Error::class);
         $this->expectExceptionMessageMatches('/Call to undefined method .*::setName()/');
 
-        /** @var ContainerInterface|MockObject $container */
-        $container = $this->getMockByCalls(ContainerInterface::class);
+        $builder = new MockObjectBuilder();
+
+        /** @var ContainerInterface $container */
+        $container = $builder->create(ContainerInterface::class, []);
 
         $factory = new class extends AbstractFactory {
             public function __invoke(ContainerInterface $container)
