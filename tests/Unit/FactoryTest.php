@@ -237,6 +237,18 @@ final class FactoryTest extends TestCase
         self::assertSame($name, $service->getName());
     }
 
+    /**
+     * @return array<int, array<string, string>>
+     */
+    public static function namesProvider(): iterable
+    {
+        return [
+            ['name' => ''],
+            ['name' => uniqid('name-')],
+            ['name' => uniqid('name-')],
+        ];
+    }
+
     public function testCallSettersWithUnknownKey(): void
     {
         $this->expectException(\Error::class);
@@ -257,17 +269,5 @@ final class FactoryTest extends TestCase
         };
 
         $factory($container);
-    }
-
-    /**
-     * @return array<int, array<string, string>>
-     */
-    public static function namesProvider(): iterable
-    {
-        return [
-            ['name' => ''],
-            ['name' => uniqid('name-')],
-            ['name' => uniqid('name-')],
-        ];
     }
 }
