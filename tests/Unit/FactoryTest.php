@@ -7,6 +7,7 @@ namespace Chubbyphp\Tests\Laminas\Config\Factory;
 use Chubbyphp\Laminas\Config\Factory\AbstractFactory;
 use Chubbyphp\Mock\MockMethod\WithReturn;
 use Chubbyphp\Mock\MockObjectBuilder;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
@@ -17,9 +18,7 @@ use Psr\Container\ContainerInterface;
  */
 final class FactoryTest extends TestCase
 {
-    /**
-     * @dataProvider namesProvider
-     */
+    #[DataProvider('namesProvider')]
     public function testInvoke(string $name): void
     {
         $builder = new MockObjectBuilder();
@@ -44,9 +43,7 @@ final class FactoryTest extends TestCase
         self::assertSame($name, $service->name);
     }
 
-    /**
-     * @dataProvider namesProvider
-     */
+    #[DataProvider('namesProvider')]
     public function testCallStatic(string $name): void
     {
         $builder = new MockObjectBuilder();
@@ -73,9 +70,7 @@ final class FactoryTest extends TestCase
         self::assertSame($name, $service->name);
     }
 
-    /**
-     * @dataProvider namesProvider
-     */
+    #[DataProvider('namesProvider')]
     public function testResolveDependencyWithExistingService(string $name): void
     {
         $dependency = new \stdClass();
@@ -103,9 +98,7 @@ final class FactoryTest extends TestCase
         self::assertSame($name, $service->name);
     }
 
-    /**
-     * @dataProvider namesProvider
-     */
+    #[DataProvider('namesProvider')]
     public function testResolveDependencyWithoutExistingService(string $name): void
     {
         $builder = new MockObjectBuilder();
@@ -141,9 +134,7 @@ final class FactoryTest extends TestCase
         self::assertSame($name, $service->name);
     }
 
-    /**
-     * @dataProvider namesProvider
-     */
+    #[DataProvider('namesProvider')]
     public function testResolveConfig(string $name): void
     {
         $builder = new MockObjectBuilder();
@@ -171,9 +162,7 @@ final class FactoryTest extends TestCase
         self::assertSame(['key1' => 'value1', 'key2' => 2, 'key3' => ['key31' => 'value31', 'key32' => 5]], $service->config);
     }
 
-    /**
-     * @dataProvider namesProvider
-     */
+    #[DataProvider('namesProvider')]
     public function testResolveValue(string $name): void
     {
         $builder = new MockObjectBuilder();
@@ -208,9 +197,7 @@ final class FactoryTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider namesProvider
-     */
+    #[DataProvider('namesProvider')]
     public function testCallSetters(string $name): void
     {
         $builder = new MockObjectBuilder();

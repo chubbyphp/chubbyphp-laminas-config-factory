@@ -56,15 +56,17 @@ abstract class AbstractFactory
      */
     protected function resolveValue(ContainerInterface $container, mixed $value)
     {
+        if (\is_string($value)) {
+            return $container->has($value) ? $container->get($value) : $value;
+        }
+
         if (\is_array($value)) {
             foreach ($value as $subKey => $subValue) {
                 $value[$subKey] = $this->resolveValue($container, $subValue);
             }
-
-            return $value;
         }
 
-        return \is_string($value) && $container->has($value) ? $container->get($value) : $value;
+        return $value;
     }
 
     /**
