@@ -8,7 +8,7 @@ use Psr\Container\ContainerInterface;
 
 abstract class AbstractFactory
 {
-    final public function __construct(protected string $name = '') {}
+    final public function __construct(protected readonly string $name = '') {}
 
     /**
      * @param array<int, ContainerInterface> $arguments
