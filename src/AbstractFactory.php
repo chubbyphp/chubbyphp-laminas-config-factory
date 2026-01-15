@@ -28,6 +28,7 @@ abstract class AbstractFactory
     protected function resolveDependency(ContainerInterface $container, string $class, string $factoryClass): object
     {
         if ($container->has($class.$this->name)) {
+            /** @var object */
             return $container->get($class.$this->name);
         }
 
@@ -48,6 +49,7 @@ abstract class AbstractFactory
             return $config;
         }
 
+        /** @var array<string, mixed> */
         return $config[$this->name] ?? [];
     }
 
