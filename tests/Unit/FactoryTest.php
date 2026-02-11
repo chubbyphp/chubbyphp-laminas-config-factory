@@ -236,7 +236,7 @@ final class FactoryTest extends TestCase
     }
 
     /**
-     * @return array<int, array<string, string>>
+     * @return list<array<string, string>>
      */
     public static function namesProvider(): iterable
     {

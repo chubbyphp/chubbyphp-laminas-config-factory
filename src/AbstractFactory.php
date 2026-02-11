@@ -11,7 +11,7 @@ abstract class AbstractFactory
     final public function __construct(protected readonly string $name = '') {}
 
     /**
-     * @param array<int, ContainerInterface> $arguments
+     * @param list<ContainerInterface> $arguments
      *
      * @return mixed
      */
