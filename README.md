@@ -21,15 +21,18 @@
 
 ## Description
 
-An abstract service factory for the [laminas/laminas-servicemanager][2] and any other dependency injection container
-who's been able to handle it's config, like [chubbyphp/chubbyphp-container][3] via [chubbyphp/chubbyphp-laminas-config][4]
-and many (Aura.Di, Pimple, Auryn, Symfony, PHP-DI) more.
+An abstract service factory for [laminas/laminas-servicemanager][2] and any other [PSR-11][10] container that can
+be configured with plain PHP arrays, such as [chubbyphp/chubbyphp-container][3] via [chubbyphp/chubbyphp-laminas-config][4],
+Aura.Di, Pimple, Auryn, Symfony or PHP-DI.
 
-The original concept of this abstract service factory is by [@DASPRiD][5] used in [dasprid/container-interop-doctrine][6]
-which was handed over to [roave/psr-container-doctrine][7].
+It solves one recurring problem: a service factory should work both as a single default service and as one of several
+named instances (for example `default` and `secondary` database connections) without duplicating the factory code.
+The factory carries an optional name, and the helper methods use it to select the matching config section and
+dependencies.
 
-Small adjustments and the possibility to use the concept as a basis for all service factories led me to make it
-available as an independent repository.
+The concept originates from [@DASPRiD][5] in [dasprid/container-interop-doctrine][6], now maintained as
+[roave/psr-container-doctrine][7]. This package extracts the idea, with small adjustments, so it can serve as the basis
+for any service factory.
 
 ## Requirements
 
@@ -45,6 +48,20 @@ composer require chubbyphp/chubbyphp-laminas-config-factory "^1.5"
 ```
 
 ## Usage
+
+### Writing a factory
+
+Extend `AbstractFactory` and implement `__invoke()`. The base class provides four helpers:
+
+ * `resolveConfig(array $config)`: returns `$config` as is for an unnamed factory, or `$config[$name]` (default `[]`)
+   for a named one.
+ * `resolveDependency(ContainerInterface $container, string $class, string $factoryClass)`: returns the service
+   `$class . $name` from the container if it exists, otherwise creates it with `new $factoryClass($name)`.
+   The name is propagated, so a `secondary` factory resolves `secondary` dependencies.
+ * `resolveValue(ContainerInterface $container, mixed $value)`: replaces a string with the container service of that
+   id if one exists, recursing into arrays. Other values are returned unchanged.
+ * `callSetters(ContainerInterface $container, object $object, array $config)`: calls `set<Key>()` for every config
+   entry, passing the value through `resolveValue()`.
 
 ```php
 <?php
@@ -63,22 +80,84 @@ final class ServiceAFactory extends AbstractFactory
 {
     public function __invoke(ContainerInterface $container): ServiceA
     {
-        return new ServiceA(
-            $this->resolveConfig($container->get('config')['serviceA'] ?? []),
-            $this->resolveDependency($container, ServiceB::class, ServiceBFactory::class),
-            $this->resolveDependency($container, ServiceC::class, ServiceCFactory::class)
+        $config = $this->resolveConfig(
+            $container->get('config')['serviceA'] ?? []
         );
+
+        $serviceA = new ServiceA(
+            $this->resolveDependency(
+                $container,
+                ServiceB::class,
+                ServiceBFactory::class
+            ),
+            $this->resolveDependency(
+                $container,
+                ServiceC::class,
+                ServiceCFactory::class
+            )
+        );
+
+        // calls $serviceA->setLogger($container->get('logger'))
+        // and $serviceA->setTimeout(30)
+        return $this->callSetters($container, $serviceA, $config);
     }
 }
+```
+
+### Unnamed and named factories
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use MyProject\Factory\ServiceAFactory;
+use Psr\Container\ContainerInterface;
 
 /** @var ContainerInterface $container */
 $container = ...;
 
-// without name
+// unnamed: uses config['serviceA']
+// and the dependencies ServiceB::class, ServiceC::class
 $serviceA = (new ServiceAFactory())($container);
 
-// with name
+// named: uses config['serviceA']['default']
+// and the dependencies ServiceB::class.'default', ServiceC::class.'default'
+$serviceA = (new ServiceAFactory('default'))($container);
+
+// named via static call, useful for container definitions
 $serviceA = [ServiceAFactory::class, 'default']($container);
+```
+
+The static form works because `AbstractFactory::__callStatic()` treats the method name as the factory name.
+
+### Container definition
+
+The static form lets you register named services without writing a class per name. Example for
+[laminas/laminas-servicemanager][2]:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use MyProject\Factory\ServiceAFactory;
+use MyProject\Service\ServiceA;
+
+return [
+    'serviceA' => [
+        'default' => ['logger' => 'logger', 'timeout' => 30],
+        'secondary' => ['logger' => 'secondaryLogger', 'timeout' => 60],
+    ],
+    'dependencies' => [
+        'factories' => [
+            ServiceA::class.'default'
+                => [ServiceAFactory::class, 'default'],
+            ServiceA::class.'secondary'
+                => [ServiceAFactory::class, 'secondary'],
+        ],
+    ],
+];
 ```
 
 ## Copyright
